@@ -1,0 +1,62 @@
+/* ==========================================================================
+   MegaLab Hub — shared theme
+   These tokens are copied EXACTLY from employee-tracker-v2/styles.css so
+   every merged section inherits File Tracker's real look, not a re-guess.
+   ========================================================================== */
+
+:root{
+  --paper:#F6F7F5;
+  --panel:#FFFFFF;
+  --ink:#182420;
+  --ink-soft:#4B5A55;
+  --line:#DBE2DD;
+  --line-strong:#B9C4BE;
+
+  --teal:#0E6F5C;
+  --teal-dark:#0A5548;
+  --teal-tint:#E4F2EE;
+
+  --red-cap:#B93F28;
+  --red-tint:#FBEAE6;
+  --green-cap:#2E7D4F;
+  --green-tint:#E9F5EE;
+  --amber-cap:#B9821F;
+  --amber-tint:#FBF2E1;
+  --lavender-cap:#7C6FB0;
+  --lavender-tint:#EFEDF8;
+
+  --radius:10px;
+  --radius-sm:6px;
+  --shadow:0 1px 2px rgba(24,36,32,.06), 0 6px 20px -12px rgba(24,36,32,.18);
+
+  --font-display:'IBM Plex Sans','IBM Plex Sans Arabic',sans-serif;
+  --font-body:'IBM Plex Sans','IBM Plex Sans Arabic',sans-serif;
+  --font-mono:'IBM Plex Mono',monospace;
+
+  /* new tokens, only needed because this is now a multi-section shell */
+  --sidebar-width: 200px;
+}
+
+*{box-sizing:border-box;}
+html{-webkit-text-size-adjust:100%;}
+body{
+  margin:0;
+  background:var(--paper);
+  color:var(--ink);
+  font-family:var(--font-body);
+  line-height:1.45;
+  -webkit-font-smoothing:antialiased;
+}
+[dir="rtl"] body{font-family:'IBM Plex Sans Arabic','IBM Plex Sans',sans-serif;}
+
+button{font-family:inherit; cursor:pointer;}
+a{color:var(--teal-dark);}
+
+.paper-grid{
+  background:var(--paper);
+  background-image:
+    linear-gradient(var(--line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--line) 1px, transparent 1px);
+  background-size:28px 28px;
+  background-attachment:fixed;
+}
