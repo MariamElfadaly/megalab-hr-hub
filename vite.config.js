@@ -6,5 +6,5 @@ import react from "@vitejs/plugin-react";
 // Change "megalab-hub" below to whatever the deployed repo is named.
 export default defineConfig({
   plugins: [react()],
-  base: "/megalab-hub/",
+base: "/megalab-hr-hub/",
 });
