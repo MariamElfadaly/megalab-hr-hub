@@ -1,13 +1,12 @@
 import { useRoster } from "../contexts/RosterContext";
-import { useLanguage } from "../contexts/LanguageContext";
 import SyncErrorScreen from "../components/SyncErrorScreen";
+import RosterImport from "../components/RosterImport";
 
 export default function Dashboard() {
   const { roster, loaded, syncError } = useRoster();
-  const { t } = useLanguage();
 
   if (syncError) return <SyncErrorScreen error={syncError} />;
-  if (!loaded) return null; // simple loading state; swap for a spinner later
+  if (!loaded) return null;
 
   return (
     <div>
@@ -24,13 +23,40 @@ export default function Dashboard() {
         <h2 style={{ margin: 0, fontSize: 19 }}>{roster.length} employees</h2>
       </div>
 
-      <p style={{ color: "var(--ink-soft)", fontSize: 13 }}>
-        Use the search bar above to find someone by name or ID, or pick a
-        section from the sidebar. This landing page is a placeholder for
-        the real overview (progress bars, recent activity) — File
-        Tracker's own overview panel gets ported in here in a later
-        phase.
-      </p>
+      <RosterImport />
+
+      {roster.length > 0 && (
+        <div
+          style={{
+            background: "var(--panel)",
+            border: "1px solid var(--line)",
+            borderRadius: "var(--radius)",
+            boxShadow: "var(--shadow)",
+            overflow: "hidden",
+          }}
+        >
+          {roster.map((emp) => (
+            <div
+              key={emp.id}
+              style={{
+                display: "flex",
+                gap: 12,
+                alignItems: "center",
+                padding: "8px 14px",
+                borderBottom: "1px solid var(--line)",
+                fontSize: 13,
+              }}
+            >
+              <span style={{ fontFamily: "var(--font-mono)", fontSize: 11, color: "var(--ink-soft)", background: "var(--paper)", border: "1px solid var(--line)", borderRadius: 4, padding: "2px 6px" }}>
+                {emp.id}
+              </span>
+              <span style={{ fontWeight: 600 }}>{emp.nameEn}</span>
+              <span style={{ color: "var(--ink-soft)" }}>{emp.nameAr}</span>
+              {emp.titleEn && <span style={{ marginInlineStart: "auto", fontSize: 11, color: "var(--ink-soft)" }}>{emp.titleEn}</span>}
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 }
