@@ -1,6 +1,4 @@
 import { useMemo, useState } from "react";
-import { doc, deleteDoc } from "firebase/firestore";
-import { db } from "../lib/firebase";
 import { useRoster } from "../contexts/RosterContext";
 import { useLockerRoomData } from "../lib/useLockerRoomData";
 import SyncErrorScreen from "../components/SyncErrorScreen";
@@ -25,7 +23,15 @@ export default function LockerRoom() {
     return s;
   }, [state.lockers]);
 
-  const unassigned = useMemo(() => roster.filter((e) => !assignedIds.has(e.id)), [roster, assignedIds]);
+  const unassigned = useMemo(
+    () => roster.filter((e) => !assignedIds.has(e.id) && !(state.excludedIds || []).includes(e.id)),
+    [roster, assignedIds, state.excludedIds]
+  );
+
+  const excluded = useMemo(
+    () => roster.filter((e) => (state.excludedIds || []).includes(e.id)),
+    [roster, state.excludedIds]
+  );
 
   const activeLocker = state.lockers.find((l) => l.id === activeLockerId) || null;
 
@@ -103,14 +109,12 @@ export default function LockerRoom() {
     return "partial";
   }
 
-  async function removeFromRosterOnly(emp) {
-    const label = emp.nameEn || emp.nameAr || emp.id;
-    if (!confirm(`Remove ${label} (#${emp.id}) from the roster? This removes them everywhere they'd show up unassigned — it does not touch File Tracker, Label, or HR Timeline records for them.`)) return;
-    try {
-      await deleteDoc(doc(db, "roster", emp.id));
-    } catch (err) {
-      alert("Couldn't remove: " + err.message);
-    }
+  function excludeFromLockerList(empId) {
+    setState((s) => ({ ...s, excludedIds: [...new Set([...(s.excludedIds || []), empId])] }));
+  }
+
+  function includeInLockerList(empId) {
+    setState((s) => ({ ...s, excludedIds: (s.excludedIds || []).filter((id) => id !== empId) }));
   }
 
   return (
@@ -181,11 +185,32 @@ export default function LockerRoom() {
                 <span>{e.nameEn}</span>
                 <span className="lr-poolRowRight">
                   <span className="lr-idChip">#{e.id}</span>
-                  <button className="lr-poolDelete" onClick={() => removeFromRosterOnly(e)} title="Remove from roster">✕</button>
+                  <button className="lr-poolExclude" onClick={() => excludeFromLockerList(e.id)} title="Doesn't need a locker">
+                    No locker
+                  </button>
                 </span>
               </div>
             ))}
           </div>
+
+          {excluded.length > 0 && (
+            <div className="lr-excludedSection">
+              <h4>Not assigning a locker ({excluded.length})</h4>
+              <div className="lr-poolList">
+                {excluded.map((e) => (
+                  <div key={e.id} className="lr-poolRow lr-poolRowMuted">
+                    <span>{e.nameEn}</span>
+                    <span className="lr-poolRowRight">
+                      <span className="lr-idChip">#{e.id}</span>
+                      <button className="lr-poolUndo" onClick={() => includeInLockerList(e.id)} title="Add back to unassigned">
+                        Undo
+                      </button>
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
       </div>
 
