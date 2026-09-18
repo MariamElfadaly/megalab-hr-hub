@@ -1,4 +1,6 @@
 import { useMemo, useState } from "react";
+import { doc, deleteDoc } from "firebase/firestore";
+import { db } from "../lib/firebase";
 import { useRoster } from "../contexts/RosterContext";
 import { useLockerRoomData } from "../lib/useLockerRoomData";
 import SyncErrorScreen from "../components/SyncErrorScreen";
@@ -101,6 +103,16 @@ export default function LockerRoom() {
     return "partial";
   }
 
+  async function removeFromRosterOnly(emp) {
+    const label = emp.nameEn || emp.nameAr || emp.id;
+    if (!confirm(`Remove ${label} (#${emp.id}) from the roster? This removes them everywhere they'd show up unassigned — it does not touch File Tracker, Label, or HR Timeline records for them.`)) return;
+    try {
+      await deleteDoc(doc(db, "roster", emp.id));
+    } catch (err) {
+      alert("Couldn't remove: " + err.message);
+    }
+  }
+
   return (
     <div className="lr">
       <div className="lr-toolbar">
@@ -167,7 +179,10 @@ export default function LockerRoom() {
             {unassigned.map((e) => (
               <div key={e.id} className="lr-poolRow">
                 <span>{e.nameEn}</span>
-                <span className="lr-idChip">#{e.id}</span>
+                <span className="lr-poolRowRight">
+                  <span className="lr-idChip">#{e.id}</span>
+                  <button className="lr-poolDelete" onClick={() => removeFromRosterOnly(e)} title="Remove from roster">✕</button>
+                </span>
               </div>
             ))}
           </div>
