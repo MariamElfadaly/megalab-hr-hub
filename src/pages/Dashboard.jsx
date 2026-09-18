@@ -76,24 +76,46 @@ export default function Dashboard() {
     }
   }
 
-  // Wipes the entire roster collection. Gated behind typing an exact
+  // Wipes ONLY the roster collection. Gated behind typing an exact
   // phrase — a single click is too easy to fire by accident for
   // something this destructive.
   async function clearEntireRoster() {
     setClearing(true);
     try {
-      const snap = await getDocs(collection(db, "roster"));
-      for (let i = 0; i < snap.docs.length; i += 450) {
-        const batch = writeBatch(db);
-        snap.docs.slice(i, i + 450).forEach((d) => batch.delete(d.ref));
-        await batch.commit();
-      }
+      await clearCollection("roster");
       setConfirmText("");
       setShowDanger(false);
     } catch (err) {
       alert("Couldn't clear the roster: " + err.message);
     } finally {
       setClearing(false);
+    }
+  }
+
+  // Wipes roster + every per-employee section together — a genuine
+  // full reset. Locker Room isn't included (single shared document,
+  // not per-employee docs) and isn't real yet anyway.
+  async function clearEverything() {
+    setClearing(true);
+    try {
+      for (const c of PER_EMPLOYEE_COLLECTIONS) {
+        await clearCollection(c);
+      }
+      setConfirmText("");
+      setShowDanger(false);
+    } catch (err) {
+      alert("Couldn't clear everything: " + err.message);
+    } finally {
+      setClearing(false);
+    }
+  }
+
+  async function clearCollection(name) {
+    const snap = await getDocs(collection(db, name));
+    for (let i = 0; i < snap.docs.length; i += 450) {
+      const batch = writeBatch(db);
+      snap.docs.slice(i, i + 450).forEach((d) => batch.delete(d.ref));
+      await batch.commit();
     }
   }
 
@@ -190,32 +212,53 @@ export default function Dashboard() {
         {showDanger && (
           <div style={{ marginTop: 10, background: "var(--red-tint)", border: "1px solid var(--red-cap)", borderRadius: "var(--radius)", padding: 14 }}>
             <p style={{ margin: "0 0 8px", fontSize: 12.5, color: "var(--ink)" }}>
-              This permanently deletes all {roster.length} roster entries. It does NOT touch File Tracker, Label, or HR Timeline data in other sections — only this roster list. Type <strong>CLEAR ROSTER</strong> exactly to enable the button.
+              Two options, different scope:
             </p>
-            <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
-              <input
-                value={confirmText}
-                onChange={(e) => setConfirmText(e.target.value)}
-                placeholder="Type CLEAR ROSTER"
-                style={{ padding: "6px 10px", border: "1px solid var(--red-cap)", borderRadius: "var(--radius-sm)", fontSize: 12 }}
-              />
+
+            <div style={{ marginBottom: 14, paddingBottom: 14, borderBottom: "1px solid var(--red-cap)" }}>
+              <p style={{ margin: "0 0 6px", fontSize: 12, color: "var(--ink)" }}>
+                <strong>Roster only</strong> — deletes all {roster.length} roster entries. File Tracker, Labels, and HR Timeline data stay. Type <strong>CLEAR ROSTER</strong> to enable.
+              </p>
+              <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
+                <input
+                  value={confirmText}
+                  onChange={(e) => setConfirmText(e.target.value)}
+                  placeholder="Type CLEAR ROSTER or CLEAR EVERYTHING"
+                  style={{ padding: "6px 10px", border: "1px solid var(--red-cap)", borderRadius: "var(--radius-sm)", fontSize: 12, width: 260 }}
+                />
+              </div>
+            </div>
+
+            <div style={{ display: "flex", gap: 8 }}>
               <button
                 onClick={clearEntireRoster}
                 disabled={confirmText !== "CLEAR ROSTER" || clearing}
                 style={{
                   background: confirmText === "CLEAR ROSTER" ? "var(--red-cap)" : "var(--line-strong)",
-                  color: "#fff",
-                  border: "none",
-                  borderRadius: "var(--radius-sm)",
-                  padding: "7px 12px",
-                  fontSize: 12,
-                  fontWeight: 600,
+                  color: "#fff", border: "none", borderRadius: "var(--radius-sm)",
+                  padding: "7px 12px", fontSize: 12, fontWeight: 600,
                   cursor: confirmText === "CLEAR ROSTER" ? "pointer" : "not-allowed",
                 }}
               >
-                {clearing ? "Clearing…" : `Clear all ${roster.length} entries`}
+                {clearing ? "Clearing…" : "Clear roster only"}
+              </button>
+
+              <button
+                onClick={clearEverything}
+                disabled={confirmText !== "CLEAR EVERYTHING" || clearing}
+                style={{
+                  background: confirmText === "CLEAR EVERYTHING" ? "var(--red-cap)" : "var(--line-strong)",
+                  color: "#fff", border: "none", borderRadius: "var(--radius-sm)",
+                  padding: "7px 12px", fontSize: 12, fontWeight: 600,
+                  cursor: confirmText === "CLEAR EVERYTHING" ? "pointer" : "not-allowed",
+                }}
+              >
+                {clearing ? "Clearing…" : "Clear roster + File Tracker + Labels + HR Timeline"}
               </button>
             </div>
+            <p style={{ margin: "8px 0 0", fontSize: 11, color: "var(--ink-soft)" }}>
+              Locker Room isn't included — it isn't ported in yet.
+            </p>
           </div>
         )}
       </div>
