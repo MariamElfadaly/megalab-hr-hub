@@ -8,6 +8,7 @@ const DEFAULT_COUNT = 30;
 const emptyState = (count) => ({
   lockerCount: count,
   lockers: Array.from({ length: count }, (_, i) => ({ id: i + 1, capacity: 1, employeeIds: [] })),
+  excludedIds: [], // employees marked "doesn't need a locker" — Locker Room only, doesn't touch the roster
 });
 
 /**
