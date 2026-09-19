@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useAuth } from "../contexts/AuthContext";
+import logo from "../assets/megalab-logo.png";
 
 export default function Login() {
   const { login } = useAuth();
@@ -40,7 +41,7 @@ export default function Login() {
         <p style={{ fontFamily: "var(--font-mono)", fontSize: 10.5, letterSpacing: ".14em", textTransform: "uppercase", color: "var(--teal-dark)", margin: "0 0 4px" }}>
           Lab operations · HR compliance
         </p>
-        <h1 style={{ margin: "0 0 20px", fontSize: 20 }}>MegaLab</h1>
+        <img src={logo} alt="MegaLab" style={{ width: "100%", maxWidth: 220, height: "auto", margin: "0 0 20px" }} />
 
         <input
           type="email"
