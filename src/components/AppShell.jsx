@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useLanguage } from "../contexts/LanguageContext";
 import { useAuth } from "../contexts/AuthContext";
 import { useRoster } from "../contexts/RosterContext";
+import logo from "../assets/megalab-logo.png";
 import "./AppShell.css";
 
 const SECTIONS = [
@@ -30,8 +31,8 @@ export default function AppShell({ children }) {
   return (
     <div className="shell">
       <aside className="shell__sidebar">
+        <img src={logo} alt="MegaLab" className="shell__logo" />
         <p className="shell__eyebrow">Lab ops</p>
-        <h1 className="shell__title">{t("appName")}</h1>
 
         <nav className="shell__nav">
           {SECTIONS.map((s) => (
