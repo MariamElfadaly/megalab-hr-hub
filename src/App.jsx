@@ -11,8 +11,6 @@ import LabelGenerator from "./pages/LabelGenerator";
 import LockerRoom from "./pages/LockerRoom";
 import HrTimeline from "./pages/HrTimeline";
 
-// HashRouter avoids needing server-side rewrite rules on GitHub Pages —
-// same reasoning hr-timeline-tracker already uses.
 const Router = HashRouter;
 
 function LoginRoute() {
@@ -47,7 +45,7 @@ export default function App() {
               }
             />
             <Route
-              path="/file-tracker"
+              path="/file-tracker/:employeeId?"
               element={
                 <ProtectedRoute>
                   <Shell>
@@ -57,7 +55,7 @@ export default function App() {
               }
             />
             <Route
-              path="/labels"
+              path="/labels/:employeeId?"
               element={
                 <ProtectedRoute>
                   <Shell>
@@ -67,7 +65,7 @@ export default function App() {
               }
             />
             <Route
-              path="/locker-room"
+              path="/locker-room/:employeeId?"
               element={
                 <ProtectedRoute>
                   <Shell>
@@ -77,7 +75,7 @@ export default function App() {
               }
             />
             <Route
-              path="/hr-timeline"
+              path="/hr-timeline/:employeeId?"
               element={
                 <ProtectedRoute>
                   <Shell>
