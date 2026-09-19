@@ -1,0 +1,74 @@
+.hr-layout{ display:grid; grid-template-columns:280px 1fr; gap:16px; align-items:start; }
+@media (max-width:750px){ .hr-layout{ grid-template-columns:1fr; } }
+
+.hr-list{
+  background:var(--panel); border:1px solid var(--line); border-radius:var(--radius);
+  box-shadow:var(--shadow); overflow:hidden; max-height:70vh; overflow-y:auto;
+}
+.hr-row{
+  width:100%; display:flex; align-items:center; gap:8px;
+  background:none; border:none; border-bottom:1px solid var(--paper);
+  padding:9px 12px; font-size:12.5px; text-align:start;
+}
+.hr-row.is-active{ background:var(--teal-tint); }
+.hr-idChip{ font-family:var(--font-mono); font-size:10px; color:var(--ink-soft); }
+.hr-name{ font-weight:600; flex:1; }
+.hr-statusChip{ font-size:11px; font-weight:600; white-space:nowrap; }
+.hr-noRecord{ color:var(--ink-soft); font-weight:400; }
+
+.hr-detail{
+  background:var(--panel); border:1px solid var(--line); border-radius:var(--radius);
+  box-shadow:var(--shadow); padding:18px;
+}
+.hr-empty{ color:var(--ink-soft); font-size:13px; text-align:center; padding:20px; }
+
+.hr-primaryBtn{
+  background:var(--teal); color:#fff; border:none; border-radius:var(--radius-sm);
+  padding:8px 14px; font-size:12.5px; font-weight:600; margin-top:10px;
+}
+
+.hr-form{ display:flex; flex-direction:column; gap:10px; max-width:340px; }
+.hr-form h3{ margin:0 0 4px; font-size:15px; }
+.hr-form label{ font-size:11.5px; color:var(--ink-soft); display:flex; flex-direction:column; gap:3px; }
+.hr-form input, .hr-form select{ padding:7px 9px; border:1px solid var(--line-strong); border-radius:var(--radius-sm); font-size:13px; font-family:inherit; }
+
+.hr-detail h3{ margin:0 0 2px; font-size:16px; }
+.hr-nameAr{ font-weight:400; font-size:13px; color:var(--ink-soft); }
+.hr-jobTitle{ margin:0 0 14px; font-size:12.5px; color:var(--ink-soft); }
+
+.hr-statusBlock{ display:flex; align-items:center; gap:12px; margin-bottom:12px; }
+.hr-tenure{ font-size:11.5px; color:var(--ink-soft); }
+
+.hr-progressBlock{ margin-bottom:16px; }
+.hr-bar{ height:7px; background:var(--paper); border-radius:999px; overflow:hidden; margin-bottom:6px; }
+.hr-barFill{ height:100%; background:var(--amber-cap); }
+.hr-progressText{ margin:0 0 10px; font-size:11.5px; color:var(--ink-soft); }
+
+.hr-actions{ display:flex; gap:8px; flex-wrap:wrap; }
+.hr-actionBtn{
+  background:var(--panel); border:1px solid var(--line-strong); border-radius:var(--radius-sm);
+  padding:6px 12px; font-size:12px; font-weight:600;
+}
+.hr-actionGood{ background:var(--green-tint); border-color:var(--green-cap); color:var(--green-cap); }
+.hr-actionBad{ background:var(--red-tint); border-color:var(--red-cap); color:var(--red-cap); }
+
+.hr-infoGrid{
+  display:grid; grid-template-columns:1fr 1fr; gap:10px;
+  margin:16px 0; padding:12px 0; border-top:1px solid var(--line); border-bottom:1px solid var(--line);
+}
+.hr-infoGrid label{ display:block; font-size:10.5px; color:var(--ink-soft); text-transform:uppercase; letter-spacing:.04em; }
+.hr-infoGrid span{ font-size:13px; }
+
+.hr-section{ margin-top:16px; }
+.hr-section h4{ font-size:12px; text-transform:uppercase; letter-spacing:.05em; color:var(--ink-soft); margin:0 0 8px; }
+.hr-muted{ color:var(--ink-soft); font-size:12px; }
+
+.hr-listRow{
+  display:flex; justify-content:space-between; align-items:center;
+  padding:6px 0; border-bottom:1px solid var(--paper); font-size:12.5px;
+}
+.hr-deleteBtn{ background:none; border:none; color:var(--red-cap); font-size:12px; padding:2px 6px; }
+
+.hr-inlineForm{ display:flex; gap:6px; margin-top:8px; }
+.hr-inlineForm input{ padding:6px 8px; border:1px solid var(--line-strong); border-radius:var(--radius-sm); font-size:12px; }
+.hr-smallBtn{ background:var(--teal); color:#fff; border:none; border-radius:var(--radius-sm); padding:6px 12px; font-size:12px; font-weight:600; }
