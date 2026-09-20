@@ -1,0 +1,112 @@
+/* ==========================================================================
+   MegaLab Hub — shared theme
+   These tokens are copied EXACTLY from employee-tracker-v2/styles.css so
+   every merged section inherits File Tracker's real look, not a re-guess.
+   ========================================================================== */
+
+:root{
+  --paper:#F6F7F5;
+  --panel:#FFFFFF;
+  --ink:#182420;
+  --ink-soft:#4B5A55;
+  --line:#DBE2DD;
+  --line-strong:#B9C4BE;
+
+  --teal:#0E6F5C;
+  --teal-dark:#0A5548;
+  --teal-tint:#E4F2EE;
+
+  --red-cap:#B93F28;
+  --red-tint:#FBEAE6;
+  --green-cap:#2E7D4F;
+  --green-tint:#E9F5EE;
+  --amber-cap:#B9821F;
+  --amber-tint:#FBF2E1;
+  --lavender-cap:#7C6FB0;
+  --lavender-tint:#EFEDF8;
+
+  --radius:10px;
+  --radius-sm:6px;
+  --shadow:0 1px 2px rgba(24,36,32,.06), 0 6px 20px -12px rgba(24,36,32,.18);
+
+  --font-display:'IBM Plex Sans','IBM Plex Sans Arabic',sans-serif;
+  --font-body:'IBM Plex Sans','IBM Plex Sans Arabic',sans-serif;
+  --font-mono:'IBM Plex Mono',monospace;
+
+  /* new tokens, only needed because this is now a multi-section shell */
+  --sidebar-width: 200px;
+}
+
+*{box-sizing:border-box;}
+html{-webkit-text-size-adjust:100%;}
+body{
+  margin:0;
+  background:var(--paper);
+  color:var(--ink);
+  font-family:var(--font-body);
+  line-height:1.45;
+  -webkit-font-smoothing:antialiased;
+}
+[dir="rtl"] body{font-family:'IBM Plex Sans Arabic','IBM Plex Sans',sans-serif;}
+
+button{font-family:inherit; cursor:pointer;}
+a{color:var(--teal-dark);}
+
+.paper-grid{
+  background:var(--paper);
+  background-image:
+    linear-gradient(var(--line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--line) 1px, transparent 1px);
+  background-size:28px 28px;
+  background-attachment:fixed;
+}
+
+/* ---------------- print reports ----------------
+   A single hidden area, populated with a report's HTML just before
+   window.print() is called. Everything else on the page is hidden
+   during print via visibility (not display), which is more robust
+   than hiding elements individually since it doesn't depend on the
+   app's specific DOM structure. */
+#printArea{ display:none; }
+@media print{
+  body *{ visibility:hidden; }
+  #printArea, #printArea *{ visibility:visible; }
+  #printArea{
+    display:block !important;
+    position:absolute; top:0; left:0; width:100%;
+    font-family:var(--font-body); color:#000; padding:20px;
+  }
+  #printArea .rp-brand{ font-size:10px; letter-spacing:.1em; text-transform:uppercase; color:#555; margin-bottom:2px; }
+  #printArea h1{ font-size:20px; margin:0 0 14px; }
+  #printArea table{ width:100%; border-collapse:collapse; margin-bottom:16px; font-size:12px; }
+  #printArea th{ text-align:left; color:#555; font-weight:600; padding:4px 8px 4px 0; white-space:nowrap; }
+  #printArea td{ padding:4px 8px 4px 0; }
+  #printArea h3{ font-size:13px; margin:16px 0 6px; border-bottom:1px solid #000; padding-bottom:3px; }
+  #printArea .rp-row{ font-size:12px; padding:3px 0; border-bottom:1px solid #ddd; }
+  #printArea .rp-footer{ margin-top:24px; font-size:10px; color:#777; display:flex; justify-content:space-between; }
+
+  /* File Tracker's original report classes, ported exactly */
+  .doc-brand{font-size:9.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--teal-dark);font-weight:700;margin-bottom:5px;}
+  .doc-title{font-size:18px;font-weight:700;margin:0 0 10px;border-bottom:2px solid #000;padding-bottom:8px;letter-spacing:-.01em;}
+  .info-table{width:100%;border-collapse:collapse;margin-bottom:14px;font-size:11.5px;}
+  .info-table th{text-align:start;color:#666;font-weight:600;text-transform:uppercase;font-size:9.5px;letter-spacing:.05em;padding:4px 8px 4px 0;width:80px;border-bottom:1px solid #ddd;vertical-align:top;}
+  .info-table td{padding:4px 16px 4px 0;border-bottom:1px solid #ddd;font-family:var(--font-mono);font-size:11px;}
+  .sec-head{display:flex;justify-content:space-between;align-items:baseline;font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;border-bottom:1px solid #000;padding-bottom:3px;margin:14px 0 2px;}
+  .sec-head .count{font-family:var(--font-mono);color:#666;font-weight:500;}
+  .doc-row{display:flex;align-items:center;gap:8px;padding:4px 0;border-bottom:1px solid #F0F0F0;font-size:12px;}
+  .doc-row .box{font-size:13px;color:#888;width:12px;}
+  .doc-row .name{flex:1;}
+  .doc-row .tag{font-size:9px;text-transform:uppercase;letter-spacing:.05em;color:#888;font-weight:600;}
+  .doc-row .tag.req{color:var(--red-cap);}
+  .cutrule{position:relative;text-align:center;margin:16px 0 4px;border-top:1px dashed #aaa;}
+  .cutrule span{position:relative;top:-8px;background:#fff;padding:0 8px;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:#999;}
+  .repeat-line{font-family:var(--font-mono);font-size:11px;color:#666;margin-bottom:6px;}
+  .clear-line{padding:6px 0;font-size:12.5px;color:var(--green-cap);font-weight:600;}
+  .doc-footer{margin-top:16px;padding-top:6px;border-top:1px solid #ddd;font-size:9px;color:#999;display:flex;justify-content:space-between;}
+  .rpt-h{display:flex;justify-content:space-between;align-items:flex-start;border-bottom:2px solid #000;padding-bottom:10px;margin-bottom:14px;}
+  .rpt-h h1{font-size:19px;margin:0 0 4px;}
+  .rpt-h .meta{font-size:11px;color:#333;font-family:var(--font-mono);text-align:end;line-height:1.7;}
+  .rpt-table{width:100%;border-collapse:collapse;font-size:11.5px;margin-bottom:16px;}
+  .rpt-table th,.rpt-table td{border:1px solid #999;padding:5px 7px;text-align:start;}
+  .rpt-table th{background:#eee;}
+}
