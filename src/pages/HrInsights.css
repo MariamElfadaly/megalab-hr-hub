@@ -1,0 +1,41 @@
+.hri-toolbar{ display:flex; justify-content:space-between; align-items:center; margin-bottom:6px; }
+.hri-back{ background:none; border:none; color:var(--ink-soft); font-size:12.5px; padding:0; }
+.hri-printBtn{ background:var(--panel); border:1px solid var(--line-strong); border-radius:var(--radius-sm); padding:6px 13px; font-size:12px; font-weight:600; }
+.hri-title{ font-size:20px; margin:6px 0 2px; }
+.hri-meta{ font-size:12px; color:var(--ink-soft); margin:0 0 18px; }
+.hri-empty{ text-align:center; padding:40px; color:var(--ink-soft); font-size:13px; background:var(--panel); border:1px dashed var(--line-strong); border-radius:var(--radius); }
+
+.hri-summary{ display:grid; grid-template-columns:repeat(5, 1fr); gap:8px; margin-bottom:18px; }
+@media (max-width:640px){ .hri-summary{ grid-template-columns:repeat(2, 1fr); } }
+.hri-stat{ background:var(--panel); border:1px solid var(--line); border-radius:var(--radius); padding:12px; text-align:center; }
+.hri-stat--urgent .hri-statValue{ color:var(--red-cap); }
+.hri-statValue{ font-size:22px; font-weight:700; }
+.hri-statLabel{ font-size:10.5px; color:var(--ink-soft); margin-top:3px; }
+
+.hri-sectionTitle{ font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:.06em; color:var(--ink-soft); border-bottom:1px solid var(--line); padding-bottom:6px; margin:20px 0 10px; }
+
+.hri-insights{ display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+.hri-card{ background:var(--panel); border:1px solid var(--line); border-radius:var(--radius); padding:16px; }
+.hri-cardValue{ font-size:26px; font-weight:700; color:var(--teal-dark); }
+.hri-cardLabel{ font-size:12px; font-weight:600; margin-top:2px; }
+.hri-cardHint{ font-size:11px; color:var(--ink-soft); margin-top:3px; }
+
+.hri-deptBars{ display:flex; flex-direction:column; gap:8px; }
+.hri-deptBar{ display:flex; align-items:center; gap:10px; font-size:12.5px; }
+.hri-deptLabel{ width:110px; flex-shrink:0; }
+.hri-deptTrack{ flex:1; height:8px; background:var(--paper); border-radius:999px; overflow:hidden; }
+.hri-deptFill{ height:100%; background:var(--teal); }
+.hri-deptCount{ width:24px; text-align:end; color:var(--ink-soft); }
+
+.hri-section{ margin-bottom:4px; }
+.hri-sectionSub{ font-size:12.5px; font-weight:600; margin:10px 0 6px; }
+.hri-sectionList{ background:var(--panel); border:1px solid var(--line); border-radius:var(--radius); overflow:hidden; }
+.hri-row{
+  width:100%; display:flex; justify-content:space-between; align-items:center;
+  background:none; border:none; border-bottom:1px solid var(--paper);
+  padding:9px 14px; font-size:13px; text-align:start;
+}
+.hri-row:last-child{ border-bottom:none; }
+.hri-row:hover{ background:var(--paper); }
+.hri-rowMeta{ font-size:11.5px; color:var(--ink-soft); }
+.hri-sectionEmpty{ font-size:12px; color:var(--ink-soft); background:var(--panel); border:1px dashed var(--line); border-radius:var(--radius); padding:12px; text-align:center; }
